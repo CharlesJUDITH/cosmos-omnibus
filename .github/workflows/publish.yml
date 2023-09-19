@@ -65,7 +65,7 @@ jobs:
           - project: fetchhub
             version: v0.10.6
           - project: gitopia
-            version: v2.1.1
+            version: v3.1.0
           - project: gravitybridge
             version: v1.7.2
           - project: impacthub
