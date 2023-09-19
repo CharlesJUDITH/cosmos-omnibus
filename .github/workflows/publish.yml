@@ -137,7 +137,7 @@ jobs:
           # - project: terra
           #   version: v0.5.18
           - project: umee
-            version: v3.1.0
+            version: vv6.0.1
           - project: ununifi
             version: v3.2.1
           - project: vidulum
