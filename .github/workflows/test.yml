@@ -1,8 +1,11 @@
 name: test
+
 on:
   push:
     branches:
       - '**'
+    paths-ignore:
+      - '.github/workflows/**'
   pull_request:
 
 concurrency:
@@ -10,33 +13,50 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build_matrix:
+  detect_changes:
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - id: set-matrix
-        run: echo "matrix=$(find * -type f -name build.yml -not -path "terra*" | xargs dirname | sort | uniq | jq --raw-input . | jq -c --slurp .)" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Detect changed projects
+        id: set-matrix
+        run: |
+          CHANGED_PROJECTS=()
+          PROJECT_DIRECTORIES=$(find * -type f -name build.yml -not -path "terra*" | xargs dirname | sort | uniq)
+
+          for dir in $PROJECT_DIRECTORIES; do
+            if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q "^$dir/"; then
+              CHANGED_PROJECTS+=("$dir")
+            fi
+          done
+
+          if [ ${#CHANGED_PROJECTS[@]} -eq 0 ]; then
+            echo "No changes in projects"
+            echo "matrix=[]" >> $GITHUB_OUTPUT
+          else
+            echo "Changed projects: ${CHANGED_PROJECTS[@]}"
+            echo "matrix=$(echo ${CHANGED_PROJECTS[@]} | jq -R -s -c 'split(\" \")')" >> $GITHUB_OUTPUT
 
   build:
-    needs: build_matrix
+    needs: detect_changes
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 12
       matrix:
-        project: ${{ fromJson(needs.build_matrix.outputs.matrix) }}
-
+        project: ${{ fromJson(needs.detect_changes.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/setup-buildx-action@v2
-        id: buildx
+      - if: ${{ fromJson(needs.detect_changes.outputs.matrix) }}
+        uses: actions/checkout@v3
+      - if: ${{ fromJson(needs.detect_changes.outputs.matrix) }}
+        uses: docker/setup-buildx-action@v2
         with:
           install: true
-      - name: Build
+      - if: ${{ fromJson(needs.detect_changes.outputs.matrix) }}
+        name: Build
         run: |
           touch .env # Create dummy env file
-          cd ${{matrix.project}}
+          cd ${{ matrix.project }}
           docker buildx bake -f build.yml --set node_1.tags=node
