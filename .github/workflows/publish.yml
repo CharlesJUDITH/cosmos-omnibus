@@ -17,7 +17,7 @@ jobs:
       matrix:
         include:
           - project: agoric
-            version: agoric-upgrade-7-2
+            version: agoric-upgrade-13
           - project: akash
             version: v0.30.0
           - project: archway

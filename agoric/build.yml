@@ -7,10 +7,11 @@ services:
       args:
         PROJECT: agoric
         PROJECT_BIN: ag0
-        VERSION: agoric-upgrade-7-2
+        VERSION: agoric-upgrade-13
         REPOSITORY: https://github.com/Agoric/ag0/
         NAMESPACE: AG0
         PROJECT_DIR: .agoric
+        GOLANG_VERSION: 1.20-buster
     ports:
       - '26656:26656'
       - '26657:26657'

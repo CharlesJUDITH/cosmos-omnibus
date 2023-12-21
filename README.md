@@ -46,7 +46,7 @@ tagged with the form `$COSMOS_OMNIBUS_VERSION-$PROJECT-$PROJECT_VERSION`.
 
 |Project|Version|Image| |
 |---|---|---|---|
-|[agoric](https://github.com/Agoric/ag0)|`agoric-upgrade-7-2`|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-agoric-agoric-upgrade-7-2`|[Example](./agoric)|
+|[agoric](https://github.com/Agoric/ag0)|`agoric-upgrade-13`|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-agoric-agoric-upgrade-13`|[Example](./agoric)|
 |[akash](https://github.com/akash-network/node)|`v0.30.0`|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-akash-v0.30.0`|[Example](./akash)|
 |[archway](https://github.com/archway-network/archway)|`v4.0.2`|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-archway-v4.0.2`|[Example](./archway)|
 |[assetmantle](https://github.com/AssetMantle/node)|`v1.0.0`|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-assetmantle-v1.0.0`|[Example](./assetmantle)|

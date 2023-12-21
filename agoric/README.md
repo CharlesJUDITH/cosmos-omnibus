@@ -2,12 +2,12 @@
 
 | | |
 |---|---|
-|Version|`agoric-upgrade-7-2`|
+|Version|`agoric-upgrade-13`|
 |Binary|`ag0`|
 |Directory|`.agoric`|
 |ENV namespace|`AG0`|
 |Repository|`https://github.com/Agoric/ag0/`|
-|Image|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-agoric-agoric-upgrade-7-2`|
+|Image|`ghcr.io/akash-network/cosmos-omnibus:v0.4.3-agoric-agoric-upgrade-13`|
 
 ## Examples
 
